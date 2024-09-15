@@ -1,9 +1,13 @@
 package service;
 
-import com.sun.tools.javac.Main;
 import entities.Category;
 import entities.Product;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +22,7 @@ public class Warehouse {
     if(warehouseProducts.contains(product)) {
       System.out.println("Varan finns redan");
     } else{
-    warehouseProducts.add(product);
+      warehouseProducts.add(product);
       System.out.println("Produkten tillagd");
       System.out.println(product.toString());
 
@@ -33,6 +37,7 @@ public class Warehouse {
     return Collections.unmodifiableList(names);
   }
 
+  //NEW NAME
   public void modifyProduct(String name, String newInput) {
     Product product = findProductByName(name);
     if (product != null) {
@@ -40,18 +45,18 @@ public class Warehouse {
     }
   }
 
-
+//NEW CATEGORY
   public void modifyProduct( String name, Category newInput) {
-    System.out.println("Vad vill du att nya kategorin ska vara?");
-    Scanner scanner = new Scanner(System.in);
-    String input = scanner.nextLine();
-    Category newinput = Category.valueOf(input);
+//    System.out.println("Vad vill du att nya kategorin ska vara?");
+//    Scanner scanner = new Scanner(System.in);
+//    String input = scanner.nextLine().trim().toUpperCase();
     Product product = findProductByName(name);
     if (product != null) {
       product.editProduct(newInput);
     }
   }
 
+  //NEW RATING
   public void modifyProduct(String name, int newInput) {
     Product product = findProductByName(name);
     if (product != null) {
@@ -79,21 +84,51 @@ public class Warehouse {
 
   public void printAll() {
     for (Product product : warehouseProducts) {
-      System.out.println("Id: " + product.getId() + " Name: " + product.getName() + " Category: " + product.getCategory());
+//      System.out.println("Id: " + product.getId() + " Name: " + product.getName() + " Category: " + product.getCategory());
+      System.out.println(product.toString());
     }
   }
 
   public void printCategory(Category inputCategory) {
     List<Product> sortedList = getProductsByCategoryAndSortByName(inputCategory);
-    for (Product product : sortedList) {
-      System.out.println(product.toString());
-    }
+    printGivenList(sortedList);
   }
 
   public List<Product> getProductsByCategoryAndSortByName(Category category) {
     return warehouseProducts.stream()
         .filter(product -> product.getCategory().equals(category))
         .sorted(Comparator.comparing(Product::getName))
+        .collect(Collectors.toList());
+  }
+
+  public List<Product> fetchListByDate(LocalDateTime date) {
+    return warehouseProducts.stream()
+        .filter(product -> product.getCreatedDate().isAfter(date))
+        .sorted(Comparator.comparing(Product::getCreatedDate))
+        .collect(Collectors.toList());
+  }
+  public void printProductsByDate(LocalDateTime date){
+    List<Product> productsByDate = fetchListByDate(date);
+    printGivenList(productsByDate);
+  }
+
+  private static void printGivenList(List<Product> listOfProducts) {
+    for (Product product : listOfProducts) {
+      System.out.println(product.toString());
+    }
+  }
+
+
+
+  public void isModified() {
+    List<Product> productsIsModified = getModifiedList();
+    printGivenList(productsIsModified);
+  }
+
+  private List<Product> getModifiedList() {
+    return warehouseProducts.stream()
+        .sorted(Comparator.comparing(Product::getLastModifiedDate, Comparator.nullsLast(Comparator.naturalOrder())))
+        .sorted(Comparator.comparing(Product::getLastModifiedDate))
         .collect(Collectors.toList());
   }
 }//endpoint

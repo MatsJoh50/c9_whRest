@@ -4,21 +4,24 @@ package entities;
 import service.UID;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Product{
   private final String id = new UID(1,4).getUid();
   private String name;
   private Category category;
   private int rating;
-  private final LocalDate createdDate;
-  private LocalDate lastModifiedDate;
+  private final LocalDateTime createdDate;
+  private LocalDateTime lastModifiedDate;
 
   public Product(String name, Category category, int rating) {
+    LocalDateTime now = LocalDateTime.now();
     this.name = name;
     this.category = category;
     this.rating = rating;
-    this.createdDate = LocalDate.now();
-    this.lastModifiedDate = LocalDate.now();
+    this.createdDate = now;
+    this.lastModifiedDate = now;
   }
   @Override
   public String toString() {
@@ -34,7 +37,7 @@ public class Product{
     return id;
   }
   public String getName() {
-    return name.toString();
+    return name;
   }
   public Category getCategory() {
     return category;
@@ -42,29 +45,29 @@ public class Product{
   public int getRating() {
     return rating;
   }
-  public LocalDate getCreatedDate() {
+  public LocalDateTime getCreatedDate() {
     return createdDate;
   }
-  public LocalDate getLastModifiedDate() {
+  public LocalDateTime getLastModifiedDate() {
     return lastModifiedDate;
   }
-  public void setLastModifiedDate(LocalDate lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
+  public void setLastModifiedDate() {
+    this.lastModifiedDate = LocalDateTime.now();
   }
 
   public void editProduct(String newName){
     this.name = newName;
-    this.lastModifiedDate = LocalDate.now();
+    setLastModifiedDate();
   }
 
   public void editProduct(Category newCategory){
     this.category = newCategory;
-    this.lastModifiedDate = LocalDate.now();
+    setLastModifiedDate();
   }
 
   public void editProduct(int newRating){
     this.rating = newRating;
-    this.lastModifiedDate = LocalDate.now();
+    setLastModifiedDate();
   }
 
 }

@@ -3,6 +3,10 @@ import entities.Product;
 import service.UID;
 import service.Warehouse;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.Scanner;
 
 public  class App {
@@ -24,8 +28,8 @@ public  class App {
                 case 3 -> warehouse.printAll();
                 case 4 -> warehouse.search(findProduct());
                 case 5 -> warehouse.printCategory(askForCategory());
-//                case 6 -> warehouse.printByDate();
-//                case 7 -> warehouse.isModified();
+                case 6 -> warehouse.printProductsByDate(askForDate());
+                case 7 -> warehouse.isModified();
                 case 0 -> isRunning = false;
                 default -> System.out.println("Invalid input");
             }
@@ -192,17 +196,19 @@ public  class App {
         int option = scanner.nextInt();
         switch (option) {
             case 1 -> {
+                    scanner.nextLine();
                 while(true) {
-
                     System.out.println("Nytt namn: ");
                     String editedName = scanner.nextLine();
+
                     if (!isProductUnique(warehouse, editedName)) {
                         System.out.println("En produkt med det namnet finns redan");
                         continue;
                     }
+
                     warehouse.modifyProduct(editThisProduct, editedName);
                     break;
-                }
+                 }
             }
             case 2 -> {
                     printAllCategories();
@@ -217,5 +223,23 @@ public  class App {
             }
         }
     }
-
+    private static LocalDateTime askForDate() {
+        System.out.println("Vilket datum vill du söka från?: ");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("År: ");
+        int year = scanner.nextInt();
+        System.out.print("Månad: ");
+        int month = scanner.nextInt();
+        System.out.print("Dag: ");
+        int day = scanner.nextInt();
+        return buildDate(year, month, day);
+    }
+    private static LocalDateTime buildDate(int year, int month, int day) {
+        try{
+            return LocalDateTime.of(year, month, day, 0, 0, 0);
+        } catch (DateTimeException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 }
