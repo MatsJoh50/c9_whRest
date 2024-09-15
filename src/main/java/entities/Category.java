@@ -1,14 +1,12 @@
 package entities;
 
 public enum Category {
-  Pants,
-  Shirts,
-  Shoes,
-  Jackets,
-  Backpacks,
-  Cooking,
-  Carving,
-  Medical
-
-
+  PANTS,
+  SHIRTS,
+  SHOES,
+  JACKETS,
+  BACKPACKS,
+  COOKING,
+  CARVING,
+  MEDICAL
 }
