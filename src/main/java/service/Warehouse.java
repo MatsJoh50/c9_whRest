@@ -37,7 +37,7 @@ public String callbackOnAddedProduct(Product product) {
 
   //NEW NAME
   public void modifyProduct(String id, String newName) {
-    Product product = findProductById(id);
+    Product product = search(id);
     if (product != null) {
       product.editProduct(newName);
     }
@@ -45,7 +45,7 @@ public String callbackOnAddedProduct(Product product) {
 
 //NEW CATEGORY
   public void modifyProduct( String id, Category newCategory) {
-    Product product = findProductById(id);
+    Product product = search(id);
     if (product != null) {
       product.editProduct(newCategory);
     }
@@ -53,21 +53,11 @@ public String callbackOnAddedProduct(Product product) {
 
   //NEW RATING
   public void modifyProduct(String id, int newRating) {
-    Product product = findProductById(id);
+    Product product = search(id);
     if (product != null) {
       product.editProduct(newRating);
     }
   }
-
-  private Product findProductById(String uid) {
-    for (Product p : warehouseProducts) {
-      if (p.getId().equals(uid)) {
-        return p;
-      }
-    }
-    return null;
-  }
-
 
   public Product search(String uid) {
     try {
@@ -84,7 +74,6 @@ public String callbackOnAddedProduct(Product product) {
 
   public void printAll() {
     for (Product product : warehouseProducts) {
-//      System.out.println("Id: " + product.getId() + " Name: " + product.getName() + " Category: " + product.getCategory());
       System.out.println(product.toString());
     }
   }

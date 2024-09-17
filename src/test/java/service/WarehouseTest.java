@@ -26,7 +26,7 @@ public class WarehouseTest {
   private Product mockData4 =  new Product("Blue Polo", Category.SHIRTS, 9, LocalDateTime.now().minusHours(2), LocalDateTime.now());
 
   @BeforeEach
-  public void setUp() {
+  public void setup() {
 
 
     emptyWarehouse = Mockito.spy(new Warehouse());
@@ -38,8 +38,8 @@ public class WarehouseTest {
     warehouse.addProduct(mockData4);
 
   }
+
   @Test
-  @DisplayName("")
   public void testWarehouseHasProducts(){
     assertThat(warehouse.getAllNames().size()).isGreaterThan(0);
   };
@@ -122,6 +122,4 @@ public class WarehouseTest {
     Set<UID> uniqueUids = new HashSet<>(uids);
     assertThat(uniqueUids.size()).isEqualTo(uids.size());
   }
-
-
 }
