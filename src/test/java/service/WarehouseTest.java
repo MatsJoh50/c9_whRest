@@ -44,6 +44,7 @@ public class WarehouseTest {
     assertThat(warehouse.getAllNames().size()).isGreaterThan(0);
   };
 
+
   @Test
   public void testWarehouseIsEmpty(){
     assertThat(emptyWarehouse.getAllNames().size()).isEqualTo(0);
@@ -52,6 +53,11 @@ public class WarehouseTest {
   public void testResponseAfterAddingProducts(){
     assertThat(warehouse.callbackOnAddedProduct(mockData1)).isEqualTo(mockData1.toString());
   }
+@Test
+public void testAddExistingProduct(){
+
+}
+
 
   public String getFistUid() {
     List<Product> products = warehouse.fetchListByDate(LocalDateTime.now().minusDays(1));

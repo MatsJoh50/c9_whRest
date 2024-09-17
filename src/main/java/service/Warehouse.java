@@ -14,6 +14,7 @@ public class Warehouse {
     PopulateWH populateWH = new PopulateWH();
     populateWH.populate(warehouseProducts);
   }
+
   public void addProduct(Product product) {
     if(warehouseProducts.contains(product)) {
       System.out.println("Varan finns redan");
