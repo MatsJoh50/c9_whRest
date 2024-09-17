@@ -15,12 +15,12 @@ public  class App {
 
     public static void main(String[] args) {
 
+        warehouse.populateWarehouseProducts();
         boolean isRunning= true;
         while(isRunning) {
             menu();
-            warehouse.populateWarehouseProducts();
 
-            int input = validInput(1,5, true);
+            int input = validInput(1,7);
 
             switch (input) {
                 case 1 -> warehouse.addProduct(createProduct(warehouse));
@@ -64,7 +64,7 @@ public  class App {
         boolean checkingInput = true;
         while(checkingInput){
             int input = scanner.nextInt();
-            if(input >= min || input <= max || (input == 0)) {
+            if(input >= min || input <= max || input == 0) {
                 return input;
             }
             else{
@@ -73,6 +73,7 @@ public  class App {
         }
         return -1;
     };
+
     private static int validInput(int min, int max, boolean exit) {
         Scanner scanner = new Scanner(System.in);
         boolean checkingInput = true;
@@ -185,7 +186,7 @@ public  class App {
     }
 
     public static void modifyProduct(){
-        System.out.println("Skriv namnet på den produkt du vill ändra?");
+        System.out.println("Skriv ID på den produkt du vill ändra?");
         Scanner scanner = new Scanner(System.in);
         String editThisProduct = scanner.nextLine();
         System.out.println("Vad vill du ändra med produkten?");
@@ -196,7 +197,7 @@ public  class App {
         int option = scanner.nextInt();
         switch (option) {
             case 1 -> {
-                    scanner.nextLine();
+                scanner.nextLine();
                 while(true) {
                     System.out.println("Nytt namn: ");
                     String editedName = scanner.nextLine();
@@ -208,18 +209,18 @@ public  class App {
 
                     warehouse.modifyProduct(editThisProduct, editedName);
                     break;
-                 }
+                }
             }
             case 2 -> {
-                    printAllCategories();
-                    System.out.println("Ny kategori: ");
-                    Category category = parseCategory();
-                    warehouse.modifyProduct(editThisProduct, category);
+                printAllCategories();
+                System.out.println("Ny kategori: ");
+                Category category = parseCategory();
+                warehouse.modifyProduct(editThisProduct, category);
             }
             case 3 -> {
-                    System.out.println("Ny rating(1-10): ");
-                    int rating = validRating(1, 10);
-                    warehouse.modifyProduct(editThisProduct, rating);
+                System.out.println("Ny rating(1-10): ");
+                int rating = validRating(1, 10);
+                warehouse.modifyProduct(editThisProduct, rating);
             }
         }
     }

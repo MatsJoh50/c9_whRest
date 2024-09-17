@@ -3,12 +3,10 @@ package entities;
 
 import service.UID;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Product{
-  private final String id = new UID(1,4).getUid();
+  private  String id;
   private String name;
   private Category category;
   private int rating;
@@ -16,13 +14,23 @@ public class Product{
   private LocalDateTime lastModifiedDate;
 
   public Product(String name, Category category, int rating) {
-    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime thisIsNow = LocalDateTime.now();
+    this.id = new UID(1,4).getUid();
     this.name = name;
     this.category = category;
     this.rating = rating;
-    this.createdDate = now;
-    this.lastModifiedDate = now;
+    this.createdDate = thisIsNow;
+    this.lastModifiedDate = thisIsNow;
   }
+  public Product(String name, Category category, int rating, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    this.id = new UID(1,4).getUid();
+    this.name = name;
+    this.category = category;
+    this.rating = rating;
+    this.createdDate = createdDate;
+    this.lastModifiedDate = lastModifiedDate;
+  }
+
   @Override
   public String toString() {
     return
